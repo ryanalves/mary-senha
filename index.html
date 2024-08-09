@@ -1,1 +1,377 @@
-<h1>Hello world!</h1>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title><link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playwrite+HR+Lijeva:wght@100..400&display=swap" rel="stylesheet">
+
+    <style>
+        
+        body {
+            margin: 0;
+            padding: 0;
+            background: black;
+            font-family: "Playwrite HR Lijeva", cursive;
+            font-optical-sizing: auto;
+            color: rgb(238, 65, 65);
+        }
+        div {
+            text-align: center;
+        }
+        #finaltriste {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 50px;
+            height: 100vh;
+        }
+        button {
+            padding: 20px;
+            border: 2px solid rgb(238, 65, 65);
+            color: rgb(238, 65, 65);
+            background: transparent;
+            font-family: "Playwrite HR Lijeva", cursive;
+            font-weight: 500;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        .senha {
+            display: flex;
+            gap: 10px;
+        }
+        .numero {
+            border: 2px solid rgb(238, 65, 65);
+            height: 45px;
+            width: 45px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .content {
+            position: absolute;
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            font-size: 30px;
+            transition: 700ms ease-in-out;
+            opacity: 1;
+        }
+        .content.hidden {
+            opacity: 0;
+            animation: none;
+        }
+        .actions {
+            margin-top: 0px;
+            height: 0px;
+            pointer-events: none;
+            opacity: 0;
+            transition: 600ms ease-in-out;
+            display: flex;
+            gap: 10px;
+        }
+        .actions.show {
+            margin-top: 10px;
+            height: 80px;
+            opacity: 1;
+            pointer-events: inherit;
+        }
+        .hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .fadein {
+            animation: fadeIn 700ms ease-in-out;
+        }
+        .fadeout {
+            animation: fadeOut 700ms ease-in-out;
+            display: none;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        @keyframes fadeOut {
+            from {
+                display: flex;
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+            }
+        }
+        
+    </style>
+</head>
+
+<body>
+    <div id="bemvinda" class="content">
+        <div id="bemvinda-1" class="hidden"></div>
+        <div id="bemvinda-2" class="hidden"></div>
+        <div id="bemvinda-3" class="hidden"></div>
+        <div id="bemvinda-actions" class="actions">
+            <button onclick="finaltriste()">Não quero esse presente bobo!</button>
+            <button onclick="fasePedido()">Sim!! Qual é??</button>
+        </div>
+    </div>
+
+    <div id="pedido" class="content hidden">
+        <div id="revelacao"></div>
+        <div id="revelacao2"></div>
+        <div id="infinito" class="senha">
+            <div class="numero">0</div>
+            <div class="numero">0</div>
+            <div class="numero">0</div>
+            <div class="numero">0</div>
+        </div>
+    </div>
+
+    <div id="pedido2" class="content hidden">
+        <div id="revelacao3"></div>
+        <div id="revelacao4"></div>
+        <div id="revelacao5"></div>
+        <div id="revelacao6"></div>
+        
+        <div id="pedido-actions" class="actions">
+            <div style="width: 150px;">
+                <button id="nao-btn"  style="width: 150px;" onclick="btnNao()" onmouseover="btnNao()">Não :/</button>
+            </div>
+            <div style="width: 150px;">
+                <button  style="width: 150px;" onclick="faseFinal()">Sim!!!</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="final" class="content hidden">
+        <div id="final1"></div>
+        <div id="final2"></div>
+        <div id="final3"></div>
+        <div id="final4" style="font-weight: bolder; font-size: 40px;"></div>
+        <div id="final5"></div>
+
+        <div id="final-actions" class="actions">
+            <button onclick="faseSenha()">:) E qual a senha, afinal?? </button>
+        </div>
+    </div>
+
+    <div id="senha" class="content hidden">
+        <div id="senha1"></div>
+        <div id="senha2"></div>
+        <div id="senhareal" class="senha">
+            <div class="numero">0</div>
+            <div class="numero">0</div>
+            <div class="numero">0</div>
+            <div class="numero">0</div>
+        </div>
+
+    </div>
+
+
+    <div id="finaltriste" class="hidden" >
+        :(
+    </div>
+
+
+</body>
+
+<script>
+    async function faseBemvinda() {
+        await waitFor(1500);
+
+        await typeSlowly('#bemvinda-1', 'Seja muitíssimo bem vinda, Maria Luíza!');
+        await waitFor(4500);
+        await hide('#bemvinda-1');
+
+        await typeSlowly('#bemvinda-2', 'Como vai você?');
+        await waitFor(4000);
+        await hide('#bemvinda-2');
+        
+        await typeSlowly('#bemvinda-3', 'Parece que você precisa de uma senha, certo?');
+        await waitFor(1500);
+        const element = document.querySelector('#bemvinda-actions');
+        element.classList.add('show');
+        await waitFor(3500);
+    }
+
+    async function fasePedido() {
+        randomizarSenha('#infinito');
+        await hide('#bemvinda');
+        await show('#pedido');
+
+        await typeSlowly('#revelacao', 'Sua senha é...', 100);
+        await waitFor(3000);
+
+        await typeSlowly('#revelacao2', '........', 500);
+        await waitFor(5000);
+        
+        fasePedido2();
+    }
+    
+    async function fasePedido2() {
+        await hide('#pedido');
+        await show('#pedido2');
+        
+        await typeSlowly('#revelacao3', 'Não achou que ia ser tão fácil assim, né???');
+        await waitFor(4000);
+        await hide('#revelacao3');
+
+        await typeSlowly('#revelacao4', 'Antes de tudo tem um termo que precisa ser assinado');
+        await waitFor(3000);
+        await hide('#revelacao4');
+
+        await typeSlowly('#revelacao5', 'Maria Luíza');
+        await waitFor(3000);
+        await typeSlowly('#revelacao6', 'Quer namorar comigo??');
+        await waitFor(1000);
+        
+        const element = document.querySelector('#pedido-actions');
+        element.classList.add('show');
+    }
+    
+    async function faseFinal() {
+        await hide('#pedido2');
+        await show('#final');
+        
+        await typeSlowly('#final1', 'Uhullllllllllllllllll');
+        await waitFor(4000);
+        await hide('#final1');
+        
+        await typeSlowly('#final2', 'Já tem um tempo que eu quero falar isso mas você não deixa rsrs');
+        await waitFor(2500);
+        await hide('#final2');
+
+        await typeSlowly('#final3', 'Maria', 100);
+        await waitFor(3000);
+        await typeSlowly('#final4', 'Eu te amo!!!', 100);
+        await waitFor(15000);
+        hide('#final3');
+        await hide('#final4');
+        await waitFor(8000);
+        
+        await typeSlowly('#final5', 'Pode ficar tranquila, eu não esqueci da sua senha rsrsrs');
+        await waitFor(700);
+        const element = document.querySelector('#final-actions');
+        element.classList.add('show');
+    }
+
+    async function faseSenha() {
+        await hide('#final');
+        await show('#senha');
+        randomizarSenha('#senhareal', '1008');
+
+        await typeSlowly('#senha1', 'Sua senha é...', 100);
+        await waitFor(4000);
+        await typeSlowly('#senha1', 'Aproveite seu presente!! :)');
+    }
+
+    function waitFor(time) {
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                resolve(true);
+            }, time);
+        })
+    }
+
+    async function show(elementQuery) {
+        const element = document.querySelector(elementQuery);
+        element.classList.remove('hidden');
+        element.classList.remove('fadeout');
+        element.classList.add('fadein');
+        await waitFor(700);
+    }
+
+    async function hide(elementQuery) {
+        const element = document.querySelector(elementQuery);
+        element.classList.remove('hidden');
+        element.classList.remove('fadein');
+        element.classList.add('fadeout');
+        await waitFor(700);
+    }
+
+    function typeSlowly(elementQuery, text, time = 50) {
+        return new Promise((resolve, reject) => {
+            const element = document.querySelector(elementQuery);
+            element.classList.add('fadein');
+            element.classList.remove('hidden');
+            const textLength = text.length;
+            let wordIndex = 0;
+            const loop = setInterval(() => {
+                const currentSlice = text.slice(0, wordIndex);
+                if(!currentSlice) {
+                    element.innerHTML = '&nbsp;';
+                } else {
+                    element.innerHTML = currentSlice;
+                }
+                if (wordIndex >= textLength) {
+                    clearInterval(loop);
+                    resolve(true);
+                } else {
+                    wordIndex++;
+                }
+            }, time);
+        })
+    }
+
+    function randomizarSenha(elementQuery, senha= '') {
+        const numbers = document.querySelectorAll(elementQuery + ' .numero');
+
+        const loop = setInterval(() => {
+            numbers.forEach((el) => {
+                el.innerHTML = Math.floor(Math.random() * 10);
+            });
+        }, 50);
+
+        if (senha) {
+            setTimeout(() => {
+                clearInterval(loop);
+                numbers.forEach((el, i) => {
+                    el.innerHTML = senha[i]
+                });
+            }, 5000);
+        }
+    }
+
+    function finaltriste() {
+        const contents = document.querySelectorAll('.content');
+        contents.forEach(content => {
+            content.classList.add('hidden')
+        });
+        const finaltristeElement = document.querySelector('#finaltriste');
+        finaltristeElement.classList.add('fadein');
+        finaltristeElement.classList.remove('hidden');
+    }
+
+    function btnNao() {
+        const element = document.querySelector('#nao-btn');
+        element.style.position = 'absolute';
+        element.style.transition = '150ms ease-in-out';
+        let top = Math.floor(Math.random() * 100);
+        let left = Math.floor(Math.random() * 100);
+        while (top > 35 && top < 65 && left > 35 && left < 65  ) {
+            top = Math.floor(Math.random() * 100);
+            left = Math.floor(Math.random() * 100);
+        }
+
+        element.style.top = `min( calc(100% - 150px) , ${top}%)`;
+        element.style.left = `min( calc(100% - 150px) , ${left}%)`;
+
+    } 
+
+  faseBemvinda();
+</script>
+
+</html>
